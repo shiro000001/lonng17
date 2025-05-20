@@ -104,8 +104,21 @@
             <div style="flex: 1;" class="flex column mgr8 mgt8">
                 <!-- 提示区 -->
                 <div style="height: 150px;" class="white yy"></div>
-                <!-- 消息区 -->
-                <div style="height: 300px;" class="white mgt8 yy"></div>
+                <!-- 点赞，消息区 -->
+                <div style="height: 300px;" class="white mgt8 yy">
+                    <button id="dzs" onclick="dianZan()"
+                            style="padding: 10px;background-color: rgb(234, 241, 136);">0
+                        </button>
+                        <script>
+                            function dianZan() {
+                                let dianZanShuBiaoQian = window.document.getElementById("dzs");
+                                let dianZanShu = parseInt(dianZanShuBiaoQian.innerText);
+                                let xinshuzi = dianZanShu + 1;
+                                dianZanShuBiaoQian.innerText = xinshuzi;
+                                return;
+                            }
+                        </script>
+                </div>
             </div>
         </div>
     </div>
