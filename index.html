@@ -1,1 +1,301 @@
-selfweb/r18.html
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>各式各样的图</title>
+    <style>
+        /* 重置默认样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 画廊容器优化 */
+        .gallery {
+            margin: 2rem auto;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        /* 图片项优化 */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            background: #fff;
+            cursor: zoom-in;
+            min-height: 300px;
+            /* 最小高度保障 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            /* 关键修改：保持原始比例 */
+            padding: 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        /* 预览模态框系统优化 */
+        .preview-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.97);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            position: relative;
+            background: #fff;
+            border-radius: 8px;
+            max-width: min(95vw, 1200px);
+            max-height: 95vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: calc(100vh - 120px);
+            object-fit: contain;
+            margin: auto;
+            padding: 20px;
+            display: block;
+        }
+
+        /* 关闭按钮优化 */
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 1001;
+            transition: all 0.5s ease;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.1);
+            background: #ff4444;
+            color: white;
+            /* 默认隐藏 */
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+
+        /* 修改关闭按钮样式 */
+        .modal-close {
+            display: none;
+            /* 默认隐藏 */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 图片悬停时显示关闭按钮 */
+        .modal-img:hover+.modal-close,
+        .modal-close:hover {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* 优化定位系统 */
+        .modal-content {
+            position: relative;
+            padding: 20px 40px 40px;
+            /* 增加顶部空间 */
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #eee;
+        }
+
+        /* 响应式优化 */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 1rem;
+            }
+
+            .gallery-item {
+                min-height: 200px;
+            }
+
+            .gallery-img {
+                max-height: 180px;
+            }
+
+            .modal-content {
+                max-width: 98vw;
+                border-radius: 4px;
+            }
+
+            .modal-img {
+                max-height: calc(100vh - 80px);
+                padding: 10px;
+            }
+
+            .modal-close {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="scard.jpg" alt="示例图片3" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+            <img src="meguru.png" alt="示例图片7" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+            <img src="0002.png" alt="示例图片8" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+            <img src="0001.jpg" alt="示例图片9" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+            <img src="0003.jpg" alt="示例图片6" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+            <img src="0004.jpg" alt="示例图片6" class="gallery-img">
+        </div>
+    </div>
+
+    <!-- 预览模态框 -->
+    <div class="preview-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img class="modal-img" src="" alt="预览大图">
+        </div>
+    </div>
+
+    <script>
+        // 添加鼠标事件监听
+        const modalImg = document.querySelector('.modal-img');
+        const modalClose = document.querySelector('.modal-close');
+
+        // 精准控制显示时机
+        let hideTimeout = null;
+
+        modalImg.addEventListener('mouseenter', () => {
+            clearTimeout(hideTimeout);
+            modalClose.style.display = 'flex';
+            setTimeout(() => modalClose.style.opacity = 1, 10);
+        });
+
+        modalImg.addEventListener('mouseleave', () => {
+            modalClose.style.opacity = 0;
+            hideTimeout = setTimeout(() => {
+                modalClose.style.display = 'none';
+            }, 9000);
+        });
+
+        // 防止按钮闪烁
+        modalClose.addEventListener('mouseenter', () => clearTimeout(hideTimeout));
+        modalClose.addEventListener('mouseleave', () => {
+            modalClose.style.opacity = 0;
+            hideTimeout = setTimeout(() => {
+                modalClose.style.display = 'none';
+            }, 90);
+        });
+        // 优化后的图片点击处理
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                const modal = document.querySelector('.preview-modal');
+                const modalImg = modal.querySelector('.modal-img');
+
+                // 添加加载状态
+                modalImg.style.opacity = 0;
+                modal.style.display = 'flex';
+
+                // 预加载完成后再显示
+                const tempImg = new Image();
+                tempImg.onload = () => {
+                    modalImg.src = imgSrc;
+                    modalImg.style.opacity = 1;
+                };
+                tempImg.src = imgSrc;
+            });
+        });
+
+        // 关闭功能保持原样
+        document.querySelector('.modal-close').addEventListener('click', () => {
+            document.querySelector('.preview-modal').style.display = 'none';
+        });
+
+        document.querySelector('.preview-modal').addEventListener('click', (e) => {
+            if (e.target === document.querySelector('.preview-modal')) {
+                document.querySelector('.preview-modal').style.display = 'none';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelector('.preview-modal').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
+
