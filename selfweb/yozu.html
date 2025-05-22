@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>懒洋洋的截图</title>
+    <style>
+        /* 重置默认样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 画廊容器 */
+        .gallery {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        /* 图片项 */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            background: #fff;
+            cursor: pointer;
+            aspect-ratio: 4/3;
+            /* 保持图片比例 */
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        /* 预览模态框 */
+        .preview-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<!-- 在页面任意位置添加此代码 -->
+<style>
+    /* 1. 添加画布样式 */
+    #ripple-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+    }
+</style>
+
+<canvas id="ripple-canvas"></canvas>
+
+<script>
+    // 2. 添加JavaScript代码
+    (function () {
+        const canvas = document.getElementById('ripple-canvas');
+        const ctx = canvas.getContext('2d');
+        let ripples = [];
+
+        // 初始化画布
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        // 涟漪效果类
+        class Ripple {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = 0;
+                this.alpha = 1;
+                this.color = `hsla(${Math.random() * 360}, 70%, 50%, ${this.alpha})`;
+            }
+
+            update() {
+                this.radius += 0.1;
+                this.alpha -= 0.0002;
+                this.color = `hsla(${Math.random() * 360}, 70%, 50%, ${this.alpha})`;
+                return this.alpha > 0;
+            }
+
+            draw() {
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = 9999;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+        }
+
+        // 3. 绑定点击事件
+        document.addEventListener('click', (e) => {
+            ripples.push(new Ripple(e.clientX, e.clientY));
+        });
+
+        // 动画循环
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ripples = ripples.filter(ripple => {
+                ripple.update();
+                ripple.draw();
+                return ripple.alpha > 0;
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    })();
+</script>
+
+<body>
+    <div class="gallery">
+        <!-- 图片项 - 可替换为实际图片路径 -->
+
+        <div class="gallery-item">
+            <img src="scard.jpg" alt="示例图片3" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+            <img src="meguru.png" alt="示例图片7" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+            <img src="meguru.png" alt="示例图片8" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+            <img src="meguru.png" alt="示例图片9" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+            <img src="meguru.png" alt="示例图片6" class="gallery-img">
+        </div>
+        <div class="gallery-item">
+            <img src="meguru.png" alt="示例图片5" class="gallery-img">
+        </div>
+        <!-- 可继续添加更多图片 -->
+    </div>
+
+    <!-- 预览模态框 -->
+    <div class="preview-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img class="modal-img" src="" alt="预览大图">
+        </div>
+    </div>
+
+    <script>
+        // 图片点击事件处理
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                const modal = document.querySelector('.preview-modal');
+                const modalImg = modal.querySelector('.modal-img');
+
+                modal.style.display = 'flex';
+                modalImg.src = imgSrc;
+            });
+        });
+
+        // 关闭模态框
+        document.querySelector('.modal-close').addEventListener('click', () => {
+            document.querySelector('.preview-modal').style.display = 'none';
+        });
+
+        // 点击背景关闭
+        document.querySelector('.preview-modal').addEventListener('click', (e) => {
+            if (e.target === document.querySelector('.preview-modal')) {
+                document.querySelector('.preview-modal').style.display = 'none';
+            }
+        });
+
+        // ESC键关闭
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelector('.preview-modal').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

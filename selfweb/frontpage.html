@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家的首页</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background-color: #eee;
+        }
+
+        /* * {
+            border: 1px solid black;
+        } */
+        .yy {
+            box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px,
+                rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .white {
+            background-color: white;
+        }
+
+        .flex1 {
+            flex: 1
+        }
+
+        .column {
+            flex-direction: column;
+        }
+
+        .mg8 {
+            margin: 8px;
+        }
+
+        .mgr8 {
+            margin-right: 8px;
+        }
+
+        .mgt8 {
+            margin-top: 8px;
+        }
+
+        .daohang {
+            padding: 10px 20px;
+            border-bottom: 1px solid rgb(190, 190, 190);
+            font-size: 15px;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .dz {
+            padding: 20px 20px;
+            border-top: 2px solid #eee;
+            border-bottom: 2px solid #eee;
+            font-size: 56px;
+            color: rgb(255, 0, 0);
+        }
+    </style>
+    <!-- 超链接 -->
+    <style>
+        .animated-link {
+            /* 基础样式 */
+            position: relative;
+            display: inline-block;
+            color: #2c3e50;
+            font-size: 1.2rem;
+            text-decoration: none;
+            /* 彻底去除默认下划线 */
+            padding: 4px 0;
+            /* 增加点击热区 */
+            transition: color 0.3s ease;
+
+            /* 自定义变量（方便调整） */
+            --underline-height: 2px;
+            --underline-color: #80ffaa;
+            --animation-duration: 0.4s;
+            --timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* 下划线伪元素 */
+        .animated-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: var(--underline-height);
+            background: var(--underline-color);
+
+            /* 初始状态 */
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform var(--animation-duration) var(--timing-function);
+        }
+
+        /* 悬停动画 */
+        .animated-link:hover {
+            color: var(--underline-color);
+            /* 文字颜色变化 */
+        }
+
+        .animated-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* 点击反馈 */
+        .animated-link:active {
+            transform: translateY(1px);
+        }
+
+        /* 无障碍焦点状态 */
+        .animated-link:focus {
+            outline: 2px solid rgba(30, 177, 17, 0.3);
+            outline-offset: 3px;
+        }
+    </style>
+
+</head>
+
+<body class="flex">
+    <!-- 侧边栏 -->
+    <div style="width: 200px;z-index: 2; " class="white yy">
+        <!-- 头像栏 -->
+        <div style="padding: 10px;align-items: center;justify-content: center;border: bottom 2px solid #999"
+            class="flex">
+            <img src="C:\Users\niuni\Desktop\001.png" width="99" alt="">
+            <div style="margin-left: 10px;">ちゃろ</div>
+        </div>
+        <!-- 导航栏 -->
+        <div class="flex1">
+            <div class="daohang">
+                <a href="yozu.html" class="animated-link">柚子</a>
+
+            </div>
+            <div class="daohang">
+                <a href="r18.html" class="animated-link">鉴赏</a>
+
+            </div>
+            <div class="daohang"><a href="particle.html" class="animated-link">炫</a></div>
+            <div class="daohang">第三页</div>
+            <div class="daohang">第四页</div>
+            <div></div>
+        </div>
+    </div>
+    <!-- 主区域 -->
+    <div class="flex1 flex column">
+        <!-- 头部栏 -->
+        <div style="height: 60px;z-index: 1;" class="white yy"></div>
+        <!-- 内容区 -->
+        <div style="overflow: auto;" class="flex1 flex">
+            <!-- 左区 -->
+            <div style="flex: 3;" class="flex column mg8">
+                <!-- 数据区 -->
+                <div class="flex">
+                    <!-- 数据块 -->
+                    <div style="height: 100px;" class="flex1 white mgr8 yy"> </div>
+                    <div style="height: 100px;" class="flex1 white mgr8 yy"> </div>
+                    <div style="height: 100px;" class="flex1 white mgr8 yy"> </div>
+                    <div style="height: 100px;" class="flex1 white mgr8 yy"> </div>
+                </div>
+                <!-- 列表区 -->
+                <div cass="flex colmun">
+                    <!-- 列表项 -->
+                    <div style="height: 160px;" class="white mgt8 yy"></div>
+                    <div style="height: 160px;" class="white mgt8 yy"></div>
+                    <div style="height: 160px;" class="white mgt8 yy"></div>
+                    <div style="height: 160px;" class="white mgt8 yy"></div>
+                    <div style="height: 160px;" class="white mgt8 yy"></div>
+                </div>
+            </div>
+            <!-- 右区 -->
+            <div style="flex: 1;" class="flex column mgr8 mgt8">
+                <!-- 提示区 -->
+                <div style="height: 150px;" class="white yy"></div>
+                <!-- 消息区 -->
+                <div style="height: 300px;" class="white mgt8 yy">点赞区
+                    <div class="dz">
+                        <button id="dzs" onclick="dianZan()"
+                            style="padding: 10px;background-color: rgb(234, 241, 136);">0
+                        </button>
+                        <script>
+                            function dianZan() {
+                                let dianZanShuBiaoQian = window.document.getElementById("dzs");
+                                let dianZanShu = parseInt(dianZanShuBiaoQian.innerText);
+                                let xinshuzi = dianZanShu + 1;
+                                dianZanShuBiaoQian.innerText = xinshuzi;
+                                return;
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
